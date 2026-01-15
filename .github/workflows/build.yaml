@@ -27,7 +27,7 @@ jobs:
         run: uv sync --locked
 
       - name: Build the project
-        run: uv run nuitka --standalone --onefile --follow-imports --output-dir=dist --output-filename=ghauri build_runner.py
+        run: uv run nuitka --standalone --onefile --follow-imports --output-dir=dist --output-filename=ghauri build.py
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
