@@ -94,6 +94,7 @@ General:
   --flush-session     Flush session files for current target
   --fresh-queries     Ignore query results stored in session file
   --test-filter       Select test payloads by titles (experimental)
+  --custom-output-dir DIR Save output files in custom directory
 
 Target:
   At least one of these options has to be provided to define the

@@ -298,6 +298,7 @@ def perform_injection(
     bulkfile=False,
     random_agent=False,
     mobile=False,
+    custom_output_dir=None,
 ):
     verbose_levels = {
         1: logging.INFO,
@@ -318,6 +319,8 @@ def perform_injection(
     conf.batch = batch
     conf._random_ua = random_agent
     conf._is_mobile_ua = mobile
+    if custom_output_dir:
+        conf._custom_output_dir = custom_output_dir
     if not bulkfile:
         logger.start("starting")
     if not force_ssl:

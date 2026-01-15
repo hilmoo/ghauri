@@ -42,7 +42,6 @@ from ghauri.common.config import conf
 
 
 class SessionFactory:
-
     """Session generation class for XPath"""
 
     def _dict_factory(self, cursor, row):
@@ -105,6 +104,8 @@ class SessionFactory:
         if target and ":" in target:
             target, port = [i.strip() for i in target.split(":")]
         filepath = os.path.join(user, ".ghauri")
+        if conf._custom_output_dir:
+            filepath = conf._custom_output_dir
         if multitarget_mode:
             filepath = os.path.join(filepath, "output")
             try:
@@ -118,6 +119,8 @@ class SessionFactory:
                 )
             return conf._multitarget_csv
         filepath = os.path.join(filepath, target)
+        if conf._custom_output_dir:
+            filepath = filepath
         if flush_session:
             logger.info("flushing session file")
             try:
@@ -308,7 +311,6 @@ class SessionFactory:
         records=None,
         clean_insert=False,
     ):
-
         steps = len(columns)
         total_records = len(records)
         chunks = [records[x : x + steps] for x in range(0, total_records, steps)]

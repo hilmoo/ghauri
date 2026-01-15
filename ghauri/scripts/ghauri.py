@@ -84,6 +84,13 @@ def main():
         help="Select test payloads by titles (experimental)",
         metavar="",
     )
+    general.add_argument(
+        "--custom-output-dir",
+        dest="custom_output_dir",
+        type=str,
+        help="Specify custom output directory to store results",
+        metavar="",
+    )
 
     target = parser.add_argument_group(
         "Target",
@@ -525,6 +532,7 @@ def main():
             bulkfile=bool(args.bulkfile),
             random_agent=args.random_agent,
             mobile=args.mobile,
+            custom_output_dir=args.custom_output_dir,
         )
         if resp.is_injected:
             target = ghauri.Ghauri(
