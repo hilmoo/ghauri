@@ -1,5 +1,4 @@
 name: Build and Release
-run-name: build-release-${{ inputs.tag_name }}
 
 on:
   push:
