@@ -94,7 +94,6 @@ class SessionFactory:
     def generate_filepath(
         self, target, flush_session=False, method="", data="", multitarget_mode=False
     ):
-        filepath = ""
         Response = collections.namedtuple(
             "Filepaths", ["logs", "target", "session", "filepath"]
         )
@@ -103,24 +102,26 @@ class SessionFactory:
         target = urlparse(target).netloc
         if target and ":" in target:
             target, port = [i.strip() for i in target.split(":")]
-        filepath = os.path.join(user, ".ghauri")
         if conf._custom_output_dir:
-            filepath = conf._custom_output_dir
+            base_path = conf._custom_output_dir
+        else:
+            base_path = os.path.join(user, ".ghauri")
         if multitarget_mode:
-            filepath = os.path.join(filepath, "output")
-            try:
-                os.makedirs(filepath)
-            except Exception as e:
-                pass
+            filepath = base_path
+            if not conf._custom_output_dir:
+                filepath = os.path.join(base_path, "output")
+            os.makedirs(filepath, exist_ok=True)
+
             if not conf._multitarget_csv:
                 conf._multitarget_csv = os.path.join(
                     filepath,
-                    f"results-{str(time.strftime('%m%d%Y_%I%M%p')).lower()}.csv",
+                    f"results-{time.strftime('%m%d%Y_%I%M%p').lower()}.csv",
                 )
             return conf._multitarget_csv
-        filepath = os.path.join(filepath, target)
         if conf._custom_output_dir:
-            filepath = filepath
+            filepath = base_path
+        else:
+            filepath = os.path.join(base_path, target)
         if flush_session:
             logger.info("flushing session file")
             try:
